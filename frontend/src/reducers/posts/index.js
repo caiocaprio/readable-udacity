@@ -34,7 +34,8 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_POSTS:
       return {
-        ...state
+        ...state,
+        posts: action.payload
       };
     case ADD_POST:
       return {
