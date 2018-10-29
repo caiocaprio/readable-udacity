@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Loader from './components/loader';
+import Header from './components/header';
 import Posts from './components/posts';
+
 import './App.css';
 
 import { setLoader } from './actions/global';
@@ -13,14 +15,26 @@ class App extends Component {
     return (
       <Fragment>
         {this.props.loader && <Loader />}
+
         <Router>
-          <Switch>
-            <Route
-              exact
-              path="/:category?/:post_id?"
-              render={props => <Posts {...props} {...this.props} />}
-            />
-          </Switch>
+          <Route
+            render={props => {
+              return (
+                <Fragment>
+                  <Header {...this.props} />
+                  <Switch>
+                    <Router>
+                      <Route
+                        exact
+                        path="/:category?/:post_id?"
+                        render={props => <Posts {...props} {...this.props} />}
+                      />
+                    </Router>
+                  </Switch>
+                </Fragment>
+              );
+            }}
+          />
         </Router>
       </Fragment>
     );
