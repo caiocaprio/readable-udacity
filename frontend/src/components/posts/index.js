@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getAllPosts } from '../../actions/posts';
-import StarRatingComponent from 'react-star-rating-component';
 
 function mapStateToProps(state) {
   return {};
@@ -69,6 +68,11 @@ class Posts extends Component {
                                 <span>&nbsp;|&nbsp;</span>
                                 <span className="author">by {author} </span>
                                 <span>&nbsp;|&nbsp;</span>
+                                <i
+                                  class={`far fa-thumbs-${
+                                    voteScore >= 0 ? 'up' : 'down'
+                                  }`}
+                                />
                                 <span
                                   className={
                                     `vote-score ` +
@@ -79,8 +83,8 @@ class Posts extends Component {
                                         : 'red')
                                   }
                                 >
-                                  {voteScore} star
-                                  {voteScore > 1 || voteScore < -1 ? 's' : ''}
+                                  {' '}
+                                  {voteScore}
                                 </span>
                                 <span>&nbsp;|&nbsp;</span>
                                 <span className="comments-count has-text-grey-light">
@@ -88,20 +92,18 @@ class Posts extends Component {
                                   {commentCount} Comentários
                                 </span>
                               </div>
-                              <StarRatingComponent
-                                name="rate1"
-                                starCount={5}
-                                value={voteScore > 0 ? voteScore : 0}
-                              />
                             </div>
                             <div className="article-body">
                               <p>{body}</p>
                             </div>
                             <div className="article-footer">
                               <div className="tags has-addons ">
-                                <span className="tag is-rounded is-info">
+                                <Link
+                                  to={`/${category}`}
+                                  className="tag is-rounded is-info"
+                                >
                                   {category}
-                                </span>
+                                </Link>
                               </div>
                             </div>
                           </div>
