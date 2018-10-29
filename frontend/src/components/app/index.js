@@ -2,13 +2,13 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Loader from './components/loader';
-import Header from './components/header';
-import Posts from './components/posts';
+import Loader from '../loader';
+import Header from '../header';
+import Posts from '../posts';
+import PostDetail from '../post-detail';
 
-import './App.css';
-
-import { setLoader } from './actions/global';
+import { setLoader } from '../../actions/global';
+import './index.css';
 
 class App extends Component {
   render() {
@@ -22,15 +22,22 @@ class App extends Component {
               return (
                 <Fragment>
                   <Header {...this.props} />
-                  <Switch>
-                    <Router>
+                  <Router>
+                    <Switch>
                       <Route
                         exact
-                        path="/:category?/:post_id?"
+                        path="/:category?"
                         render={props => <Posts {...props} {...this.props} />}
                       />
-                    </Router>
-                  </Switch>
+                      <Route
+                        exact
+                        path="/:category/:post_id"
+                        render={props => (
+                          <PostDetail {...props} {...this.props} />
+                        )}
+                      />
+                    </Switch>
+                  </Router>
                 </Fragment>
               );
             }}

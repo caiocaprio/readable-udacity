@@ -1,6 +1,8 @@
 @import 'bulma/bulma';
+
+@import '../posts/index.scss';
+
 // @import 'bulma-extensions/src/sass';
-@import './components/posts/index.scss';
 
 html,
 body {

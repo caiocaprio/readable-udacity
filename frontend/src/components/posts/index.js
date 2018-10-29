@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getAllPosts } from '../../actions/posts';
-import moment from 'moment';
+import StarRatingComponent from 'react-star-rating-component';
 
 function mapStateToProps(state) {
   return {};
@@ -23,59 +24,91 @@ class Posts extends Component {
             <h1 className="title">Posts</h1>
             {posts.length > 0 &&
               (posts => {
-                return posts.map((post, index) => {
-                  const {
-                    author,
-                    title,
-                    id,
-                    body,
-                    category,
-                    voteScore,
-                    deleted,
-                    timestamp,
-                    commentCount
-                  } = post;
+                return posts
+                  .filter(post => {
+                    if (!post.deleted) {
+                      if (this.props.match.params.category) {
+                        if (post.category === this.props.match.params.category)
+                          return true;
+                        else return false;
+                      }
+                      return true;
+                    }
+                  })
+                  .map((post, index) => {
+                    const {
+                      author,
+                      title,
+                      id,
+                      body,
+                      category,
+                      voteScore,
+                      deleted,
+                      timestamp,
+                      commentCount
+                    } = post;
 
-                  const d = new Date(timestamp);
-                  return (
-                    <div key={id} className="card article">
-                      <div className="card-content">
-                        <div className="content article-body">
-                          <div className="media-content">
-                            <h2 className="title article-title">
-                              Introducing a new feature for paid subscribers
-                            </h2>
-
-                            <div className="">
-                              <span className="date-posted">
-                                Posted on{' '}
-                                {d.getFullYear() +
-                                  '/' +
-                                  (d.getMonth() + 1) +
-                                  '/' +
-                                  d.getDate()}
-                              </span>
-                              <span>&nbsp;|&nbsp;</span>
-                              <span className="author">by {author} </span>
-                              <span>&nbsp;|&nbsp;</span>
-                              <span className="comments-count has-text-grey-light">
-                                <i className="fa fa-comments" /> {commentCount}{' '}
-                                Comentários
-                              </span>
+                    const d = new Date(timestamp);
+                    return (
+                      <div key={id} className="card article">
+                        <div className="card-content">
+                          <div className="content ">
+                            <div className="article-header">
+                              <h2 className="title article-title">
+                                <Link to={`/${category}/${id}`}>{title}</Link>
+                              </h2>
+                              <div className="box-info-post">
+                                <span className="date-posted">
+                                  Posted on{' '}
+                                  {d.getFullYear() +
+                                    '/' +
+                                    (d.getMonth() + 1) +
+                                    '/' +
+                                    d.getDate()}
+                                </span>
+                                <span>&nbsp;|&nbsp;</span>
+                                <span className="author">by {author} </span>
+                                <span>&nbsp;|&nbsp;</span>
+                                <span
+                                  className={
+                                    `vote-score ` +
+                                    (voteScore > 0
+                                      ? 'green'
+                                      : voteScore == 0
+                                        ? 'grey'
+                                        : 'red')
+                                  }
+                                >
+                                  {voteScore} star
+                                  {voteScore > 1 || voteScore < -1 ? 's' : ''}
+                                </span>
+                                <span>&nbsp;|&nbsp;</span>
+                                <span className="comments-count has-text-grey-light">
+                                  <i className="fa fa-comments" />{' '}
+                                  {commentCount} Comentários
+                                </span>
+                              </div>
+                              <StarRatingComponent
+                                name="rate1"
+                                starCount={5}
+                                value={voteScore > 0 ? voteScore : 0}
+                              />
                             </div>
-                          </div>
-                          <p>{title}</p>
-                          <p>{body}</p>
-                          <div class="tags has-addons ">
-                            <span class="tag is-rounded is-info">
-                              {category}
-                            </span>
+                            <div className="article-body">
+                              <p>{body}</p>
+                            </div>
+                            <div className="article-footer">
+                              <div className="tags has-addons ">
+                                <span className="tag is-rounded is-info">
+                                  {category}
+                                </span>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                });
+                    );
+                  });
               })(posts)}
           </div>
         </section>
