@@ -8,12 +8,29 @@ function mapStateToProps(state) {
 }
 
 class Posts extends Component {
+
+    constructor(props) {
+        super(props);
+        // Don't call this.setState() here!
+        this.state = {
+            order:null,
+        };
+        this.changeOrder = this.changeOrder.bind(this);
+    }
+
+
+
   componentDidMount() {
     console.log('POSTS:componentDidMount');
     this.props.getAllPosts();
   }
 
+    changeOrder(e){
+      this.setState({order:e.target.value})
+    }
+
   render() {
+
     const { posts } = this.props;
 
     return (
@@ -21,6 +38,15 @@ class Posts extends Component {
         <section className="articles">
           <div className="column is-8 is-offset-2">
             <h1 className="title">Posts</h1>
+              <div className="order is-pulled-right">
+                  <span>Order by: </span>
+                  <select className="selectOrder" onChange={this.changeOrder}>
+                      <option value="dateAsc">Date Crescent</option>
+                      <option value="dateDesc">Date Descending</option>
+                      <option value="starAsc">More Stars</option>
+                      <option value="starDesc">Less Stars</option>
+                  </select>
+              </div>
             {posts.length > 0 &&
               (posts => {
                 return posts
@@ -28,12 +54,33 @@ class Posts extends Component {
                     if (!post.deleted) {
                       if (this.props.match.params.category) {
                         if (post.category === this.props.match.params.category)
-                          return true;
-                        else return false;
+                            return true
+                        else
+                            return false;
                       }
                       return true;
                     }
-                  })
+                  }).sort((a,b)=>{
+
+                    if(!this.state.order){
+                    return true
+                     }else{
+                        switch(this.state.order){
+                            case "dateAsc":
+                                return a.timestamp < b.timestamp ? 1 : -1;
+                            break;
+                            case "dateDesc":
+                                return a.timestamp > b.timestamp ? 1 : -1;
+                            break;
+                            case "starAsc":
+                                return a.voteScore < b.voteScore ? 1 : -1;
+                            break;
+                            case "starDesc":
+                                return a.voteScore > b.voteScore ? 1 : -1;
+                            break;
+                        }
+                    }
+                })
                   .map((post, index) => {
                     const {
                       author,
