@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getAllPosts } from '../../actions/posts';
+import VoteScore from '../vote-score';
 
 function mapStateToProps(state) {
   return {};
@@ -116,9 +117,7 @@ class Posts extends Component {
                                 <span className="author">by {author} </span>
                                 <span>&nbsp;|&nbsp;</span>
                                 <i
-                                  class={`far fa-thumbs-${
-                                    voteScore >= 0 ? 'up' : 'down'
-                                  }`}
+                                  className={`fas fa-star`}
                                 />
                                 <span
                                   className={
@@ -139,6 +138,7 @@ class Posts extends Component {
                                   {commentCount} Comentários
                                 </span>
                               </div>
+                            <VoteScore id={id}/>
                             </div>
                             <div className="article-body">
                               <p>{body}</p>

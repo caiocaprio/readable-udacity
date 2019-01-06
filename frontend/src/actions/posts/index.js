@@ -55,14 +55,14 @@ export const updatePost = (id, post) =>
     body: JSON.stringify({ post })
   }).then(res => res.json());
 
-export const updateVoteInPost = (id, body) =>
+export const updateVoteInPost = (id, option) =>
   fetch(`${api}/posts/${id}`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ body })
+    body:  JSON.stringify({option})
   })
     .then(res => res.json())
     .then(data => data.posts);
