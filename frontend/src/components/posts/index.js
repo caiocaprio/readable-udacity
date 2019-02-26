@@ -106,12 +106,7 @@ class Posts extends Component {
                               </h2>
                               <div className="box-info-post">
                                 <span className="date-posted">
-                                  Posted on{' '}
-                                  {d.getFullYear() +
-                                    '/' +
-                                    (d.getMonth() + 1) +
-                                    '/' +
-                                    d.getDate()}
+                                {`Posted on ${d.getFullYear()}/${d.getMonth()}/${d.getDate()}`}
                                 </span>
                                 <span>&nbsp;|&nbsp;</span>
                                 <span className="author">by {author} </span>

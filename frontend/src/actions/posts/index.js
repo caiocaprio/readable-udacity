@@ -43,7 +43,7 @@ export const addPost = query =>
 export const getPost = id =>
   fetch(`${api}/posts/${id}`, { headers })
     .then(res => res.json())
-    .then(data => data.posts);
+
 
 export const updatePost = (id, post) =>
   fetch(`${api}/posts/${id}`, {
