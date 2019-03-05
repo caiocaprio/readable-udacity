@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { updateVoteInPost } from "../../actions/posts";
 
 class VoteScorePost extends Component {
   constructor(props) {
@@ -30,26 +29,12 @@ class VoteScorePost extends Component {
   }
 
   onClick(e) {
+    const { updateVoteInPost } = this.props;
+
     if (e.target.className.indexOf("bt-notlike") != -1) {
-      if (!this.state.notLikeActive) {
-        this.setState({ notLikeActive: "is-active" }, () => {
-          updateVoteInPost(this.state.id, "downVote");
-        });
-      } else {
-        this.setState({ notLikeActive: "" }, () => {
-          updateVoteInPost(this.state.id, "upVote");
-        });
-      }
+      updateVoteInPost(this.state.id, "downVote");
     } else {
-      if (!this.state.likeActive) {
-        this.setState({ likeActive: "is-active" }, () => {
-          updateVoteInPost(this.state.id, "upVote");
-        });
-      } else {
-        this.setState({ likeActive: "" }, () => {
-          updateVoteInPost(this.state.id, "downVote");
-        });
-      }
+      updateVoteInPost(this.state.id, "upVote");
     }
     this.resetFocus();
   }
@@ -58,9 +43,7 @@ class VoteScorePost extends Component {
     return (
       <div ref={this.sectionFocusEl}>
         <button
-          className={`button bt-like is-success ${
-            this.state.likeActive ? this.state.likeActive : "is-outlined"
-          }`}
+          className={`button bt-like is-success is-outlined`}
           onClick={this.onClick}
         >
           <i className="far fa-thumbs-up" />
@@ -68,9 +51,7 @@ class VoteScorePost extends Component {
         </button>
         &nbsp;
         <button
-          className={`button bt-notlike is-danger ${
-            this.state.notLikeActive ? this.state.notLikeActive : "is-outlined"
-          }`}
+          className={`button bt-notlike is-danger is-outlined`}
           onClick={this.onClick}
         >
           <i className="far fa-thumbs-down" />

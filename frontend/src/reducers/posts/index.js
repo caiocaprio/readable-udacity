@@ -2,30 +2,20 @@ import {
   ADD_POST,
   REMOVE_POST,
   GET_POST,
-  GET_POSTS
-} from '../../actions/posts/actionsTypes';
+  GET_POSTS,
+  UPDATE_VOTE_POSTS
+} from "../../actions/posts/actionsTypes";
 
 const INITIAL_STATE = {
-  posts: [
-    {
-      id: '',
-      timestamp: Date.now(),
-      title: '',
-      body: '',
-      author: '',
-      category: '',
-      voteScore: '',
-      deleted: false
-    }
-  ],
+  posts: [{}],
   post: {
-    id: '',
+    id: "",
     timestamp: Date.now(),
-    title: '',
-    body: '',
-    author: '',
-    category: '',
-    voteScore: '',
+    title: "",
+    body: "",
+    author: "",
+    category: "",
+    voteScore: "",
     deleted: false
   }
 };
@@ -48,6 +38,20 @@ export default (state = INITIAL_STATE, action) => {
     case GET_POST:
       return {
         ...state,
+        post: action.payload
+      };
+    case UPDATE_VOTE_POSTS:
+      return {
+        ...state,
+        posts: (postUpdated => {
+          return state.posts.map(post => {
+            if (post.id === postUpdated.id) {
+              return postUpdated;
+            }
+
+            return post;
+          });
+        })(action.payload),
         post: action.payload
       };
 

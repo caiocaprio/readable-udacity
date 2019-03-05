@@ -1,17 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getPost } from "../../actions/posts";
-import { getCommentsInPost } from "../../actions/comments";
+import { getPost, updateVoteInPost } from "../../actions/posts";
+import { getCommentsInPost, updateVoteInComment } from "../../actions/comments";
 import { Link } from "react-router-dom";
 import VoteScorePost from "../vote-score-post";
 import VoteScoreComment from "../vote-score-comment";
-
-function mapStateToProps(state) {
-  return {
-    getPost,
-    getCommentsInPost
-  };
-}
 
 class PostDetail extends Component {
   constructor(props) {
@@ -19,17 +12,7 @@ class PostDetail extends Component {
 
     this.state = {
       order: null,
-      post: {
-        author: "",
-        body: "",
-        category: "",
-        commentCount: 0,
-        deleted: false,
-        id: "",
-        timestamp: 0,
-        title: "",
-        voteScore: 0
-      },
+      post: {},
       comments: []
     };
   }
@@ -40,13 +23,9 @@ class PostDetail extends Component {
         params: { post_id }
       }
     } = this.props;
-    const post = await this.props.getPost(post_id);
-    const comments = await this.props.getCommentsInPost(post_id);
-    console.log(
-      await this.props.getCommentsInPost(this.props.match.params.post_id)
-    );
-    // console.log(post)
-    this.setState({ post, comments });
+
+    await this.props.getPost(post_id);
+    await this.props.getCommentsInPost(post_id);
   }
 
   render() {
@@ -62,7 +41,7 @@ class PostDetail extends Component {
         timestamp
       },
       comments
-    } = this.state;
+    } = this.props;
 
     const d = new Date(timestamp);
 
@@ -117,7 +96,7 @@ class PostDetail extends Component {
                         {category}
                       </Link>
                     </div>
-                    <VoteScorePost id={id} />
+                    <VoteScorePost {...this.props} id={id} />
                     <h3>Comments</h3>
                     {comments.map(comment => {
                       const {
@@ -150,7 +129,7 @@ class PostDetail extends Component {
                               {" "}
                               {voteScore}
                             </span>
-                            <VoteScoreComment id={id} />
+                            <VoteScoreComment {...this.props} id={id} />
                           </div>
                           <div className="message-footer" />
                         </article>
@@ -167,4 +146,12 @@ class PostDetail extends Component {
   }
 }
 
-export default connect(mapStateToProps)(PostDetail);
+const mapStateToProps = ({ CommentsReducer, PostsReducer }) => ({
+  ...CommentsReducer,
+  ...PostsReducer
+});
+
+export default connect(
+  mapStateToProps,
+  { getPost, getCommentsInPost, updateVoteInPost, updateVoteInComment }
+)(PostDetail);

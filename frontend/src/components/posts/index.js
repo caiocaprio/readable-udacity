@@ -1,13 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getAllPosts } from "../../actions/posts";
+import { getAllPosts, updateVoteInPost } from "../../actions/posts";
 import VoteScorePost from "../vote-score-post";
 import "./index.scss";
-
-function mapStateToProps(state) {
-  return {};
-}
 
 class Posts extends Component {
   constructor(props) {
@@ -140,7 +136,7 @@ class Posts extends Component {
                                   {category}
                                 </Link>
                               </div>
-                              <VoteScorePost id={id} />
+                              <VoteScorePost {...this.props} id={id} />
                             </div>
                           </div>
                         </div>
@@ -155,9 +151,15 @@ class Posts extends Component {
   }
 }
 
+const mapStateToProps = ({ CommentsReducer, PostsReducer }) => ({
+  ...CommentsReducer,
+  ...PostsReducer
+});
+
 export default connect(
   mapStateToProps,
   {
-    getAllPosts
+    getAllPosts,
+    updateVoteInPost
   }
 )(Posts);

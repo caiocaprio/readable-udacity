@@ -31,37 +31,20 @@ class VoteScoreComment extends Component {
   }
 
   onClick(e) {
+    const { updateVoteInComment } = this.props;
+
     if (e.target.className.indexOf("bt-notlike") != -1) {
-      if (!this.state.notLikeActive) {
-        this.setState({ notLikeActive: "is-active" }, () => {
-          updateVoteInComment(this.state.id, "downVote");
-        });
-      } else {
-        this.setState({ notLikeActive: "" }, () => {
-          updateVoteInComment(this.state.id, "upVote");
-        });
-      }
+      updateVoteInComment(this.state.id, "downVote");
     } else {
-      if (!this.state.likeActive) {
-        this.setState({ likeActive: "is-active" }, () => {
-          updateVoteInComment(this.state.id, "upVote");
-        });
-      } else {
-        this.setState({ likeActive: "" }, () => {
-          updateVoteInComment(this.state.id, "downVote");
-        });
-      }
+      updateVoteInComment(this.state.id, "upVote");
     }
-    this.resetFocus();
   }
 
   render() {
     return (
       <div ref={this.sectionFocusEl} className="box-score-comment">
         <button
-          className={`button bt-like is-success ${
-            this.state.likeActive ? this.state.likeActive : "is-outlined"
-          }`}
+          className={`button bt-like is-success is-outlined`}
           onClick={this.onClick}
         >
           <i className="far fa-thumbs-up" />
@@ -69,9 +52,7 @@ class VoteScoreComment extends Component {
         </button>
         &nbsp;
         <button
-          className={`button bt-notlike is-danger ${
-            this.state.notLikeActive ? this.state.notLikeActive : "is-outlined"
-          }`}
+          className={`button bt-notlike is-danger is-outlined`}
           onClick={this.onClick}
         >
           <i className="far fa-thumbs-down" />

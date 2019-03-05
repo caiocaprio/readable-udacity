@@ -1,4 +1,10 @@
-import { ADD_POST, GET_POSTS, GET_POST, REMOVE_POST } from "./actionsTypes";
+import {
+  ADD_POST,
+  GET_POSTS,
+  GET_POST,
+  REMOVE_POST,
+  UPDATE_VOTE_POSTS
+} from "./actionsTypes";
 
 const api = "http://localhost:3001";
 
@@ -40,8 +46,14 @@ export const addPost = query =>
     .then(res => res.json())
     .then(data => data.posts);
 
-export const getPost = id =>
-  fetch(`${api}/posts/${id}`, { headers }).then(res => res.json());
+export const getPost = id => async dispatch => {
+  const response = await fetch(`${api}/posts/${id}`, { headers });
+  const payload = await response.json();
+  dispatch({
+    type: GET_POST,
+    payload
+  });
+};
 
 export const updatePost = (id, post) =>
   fetch(`${api}/posts/${id}`, {
@@ -53,18 +65,22 @@ export const updatePost = (id, post) =>
     body: JSON.stringify({ post })
   }).then(res => res.json());
 
-export const updateVoteInPost = (id, option) => {
-  console.log(id, option);
-  return fetch(`${api}/posts/${id}`, {
+export const updateVoteInPost = (id, option) => async dispatch => {
+  const response = await fetch(`${api}/posts/${id}`, {
     method: "POST",
     headers: {
       ...headers,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ option })
-  })
-    .then(res => res.json())
-    .then(data => data.posts);
+  });
+
+  const payload = await response.json();
+
+  dispatch({
+    type: UPDATE_VOTE_POSTS,
+    payload
+  });
 };
 
 // export const search = query =>
