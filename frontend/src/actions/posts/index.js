@@ -6,7 +6,7 @@ import {
   UPDATE_VOTE_POSTS
 } from "./actionsTypes";
 
-const api = "http://localhost:3001";
+import { api, headers } from "../../contants";
 
 // Generate a unique token for storing your bookshelf data on the backend server.
 // let token = localStorage.token;
@@ -14,11 +14,6 @@ const api = "http://localhost:3001";
 //   token = localStorage.token = Math.random()
 //     .toString(36)
 //     .substr(-8);
-
-const headers = {
-  Accept: "application/json",
-  Authorization: "whatever-you-want"
-};
 
 export const getAllPosts = () => async dispatch => {
   const response = await fetch(`${api}/posts`, { headers });

@@ -5,16 +5,13 @@ import {
   UPDATE_VOTE_COMMENT
 } from "../../actions/comments/actionsTypes";
 
-const api = "http://localhost:3001";
-
-const headers = {
-  Accept: "application/json",
-  Authorization: "whatever-you-want"
-};
+import { api, headers } from "../../contants";
 
 export const getCommentsInPost = idPost => async dispatch => {
   console.log("GET_COMMENTS", idPost);
-  const response = await fetch(`${api}/posts/${idPost}/comments`, { headers });
+  const response = await fetch(`${api}/posts/${idPost}/comments`, {
+    headers
+  });
   const payload = await response.json();
   dispatch({
     type: GET_COMMENTS,

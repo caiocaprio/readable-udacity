@@ -2,7 +2,9 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getAllPosts, updateVoteInPost } from "../../actions/posts";
+import { getCategories } from "../../actions/categories";
 import VoteScorePost from "../vote-score-post";
+import Categories from "../categories";
 import "./index.scss";
 
 class Posts extends Component {
@@ -15,9 +17,10 @@ class Posts extends Component {
     this.changeOrder = this.changeOrder.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     console.log("POSTS:componentDidMount");
-    this.props.getAllPosts();
+    const { getAllPosts, getCategories } = this.props;
+    await getAllPosts();
   }
 
   changeOrder(e) {
@@ -25,7 +28,9 @@ class Posts extends Component {
   }
 
   render() {
-    const { posts } = this.props;
+    const { posts, categories } = this.props;
+
+    console.log(categories);
 
     return (
       <div className="container">
@@ -146,13 +151,19 @@ class Posts extends Component {
               })(posts)}
           </div>
         </section>
+        <Categories {...this.props} />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ CommentsReducer, PostsReducer }) => ({
+const mapStateToProps = ({
+  CommentsReducer,
+  PostsReducer,
+  CategoriesReducer
+}) => ({
   ...CommentsReducer,
+  ...CategoriesReducer,
   ...PostsReducer
 });
 
@@ -160,6 +171,7 @@ export default connect(
   mapStateToProps,
   {
     getAllPosts,
+    getCategories,
     updateVoteInPost
   }
 )(Posts);
