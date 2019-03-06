@@ -29,17 +29,21 @@ export const getPostsInCategory = category =>
     .then(res => res.json())
     .then(data => data.posts);
 
-export const addPost = query =>
-  fetch(`${api}/posts`, {
+export const addPost = post => async dispatch => {
+  const response = await fetch(`${api}/posts`, {
     method: "POST",
     headers: {
       ...headers,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ query })
-  })
-    .then(res => res.json())
-    .then(data => data.posts);
+    body: JSON.stringify({ post })
+  });
+  const payload = await response.json();
+  dispatch({
+    type: GET_POSTS,
+    payload
+  });
+};
 
 export const getPost = id => async dispatch => {
   const response = await fetch(`${api}/posts/${id}`, { headers });

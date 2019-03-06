@@ -1,7 +1,7 @@
 import { GET_CATEGORIES } from "../../actions/categories/actionsTypes";
 
 const INITIAL_STATE = {
-  categories: [{}]
+  categories: []
 };
 
 export default (state = INITIAL_STATE, action) => {
