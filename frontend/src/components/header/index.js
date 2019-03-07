@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 const Header = props => {
   return (
-    <Fragment>
+
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="container">
           <div className="navbar-brand">
@@ -32,15 +32,10 @@ const Header = props => {
               <Link className="navbar-item" to="/">
                 Posts
               </Link>
-
-              <Link className="navbar-item" to="/">
-                Categories
-              </Link>
             </div>
           </div>
         </div>
       </nav>
-    </Fragment>
   );
 };
 

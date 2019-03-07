@@ -36,7 +36,7 @@ export const addPost = post => async dispatch => {
       ...headers,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ post })
+    body: JSON.stringify({ ...post })
   });
   const payload = await response.json();
   dispatch({
@@ -54,15 +54,21 @@ export const getPost = id => async dispatch => {
   });
 };
 
-export const updatePost = (id, post) =>
-  fetch(`${api}/posts/${id}`, {
+export const updatePost = (id, title, body) => async dispatch => {
+  const response = await fetch(`${api}/posts/${id}`, {
     method: "PUT",
     headers: {
       ...headers,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ post })
-  }).then(res => res.json());
+    body: JSON.stringify({ title,body })
+  })
+  const payload = await response.json();
+  dispatch({
+    type: GET_POST,
+    payload
+  });
+}
 
 export const updateVoteInPost = (id, option) => async dispatch => {
   const response = await fetch(`${api}/posts/${id}`, {

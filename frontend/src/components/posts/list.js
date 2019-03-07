@@ -5,6 +5,7 @@ import { getAllPosts, updateVoteInPost } from "../../actions/posts";
 import { getCategories } from "../../actions/categories";
 import VoteScorePost from "../vote-score-post";
 import Categories from "../categories";
+import {Master} from "../templates"
 import "./_index.scss";
 
 class ListPosts extends Component {
@@ -33,24 +34,32 @@ class ListPosts extends Component {
     console.log(this.props);
 
     return (
-      <div className="container">
+      <Fragment>
+      <Master {...this.props}>      
+       <div className="container">
         <section className="articles">
           <div className="column is-8 is-offset-2">
-            <h1 className="title">Posts</h1>
-            <div className="order is-pulled-right">
-              <span>Order by: </span>
-              <select className="selectOrder" onChange={this.changeOrder}>
-                <option value="dateAsc">Date Crescent</option>
-                <option value="dateDesc">Date Descending</option>
-                <option value="starAsc">More Stars</option>
-                <option value="starDesc">Less Stars</option>
-              </select>
-            </div>
-            <div className="buttons is-pulled-left">
-              <Link className="button is-link" to={`/post/new`}>
+         
+           <div className="container-title">
+           <h1 className="title is-pulled-left">Posts</h1>
+           
+            <div className="buttons ">    
+              <div className="order is-pulled-right">
+                <span>Order by: </span>
+                <select className="selectOrder" onChange={this.changeOrder}>
+                  <option value="dateAsc">Date Crescent</option>
+                  <option value="dateDesc">Date Descending</option>
+                  <option value="starAsc">More Stars</option>
+                  <option value="starDesc">Less Stars</option>
+                </select>
+              </div>          
+              <Link className="button is-link is-pulled-right" to={`/post/new`}>
                 new post
               </Link>
             </div>
+           </div>
+            
+           
             {posts.length > 0 &&
               (posts => {
                 posts = posts.filter(post => {
@@ -175,6 +184,8 @@ class ListPosts extends Component {
         </section>
         <Categories {...this.props} />
       </div>
+      </Master>
+      </Fragment>
     );
   }
 }

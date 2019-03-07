@@ -23,14 +23,13 @@ class App extends Component {
             render={props => {
               return (
                 <Fragment>
-                  <Header {...this.props} />
-                  <Router>
+                  <Router>                      
                     <Switch>
                       <Route
                         exact
                         path="/post/:action?/:post_id?"
                         render={props => (
-                          <FormPost {...props} {...this.props} />
+                          <FormPost {...props} {...this.props}/>
                         )}
                       />
                       <Route
