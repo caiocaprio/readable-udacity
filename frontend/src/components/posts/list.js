@@ -6,7 +6,7 @@ import { getCategories } from "../../actions/categories";
 import VoteScorePost from "../vote-score-post";
 import Categories from "../categories";
 import {Master} from "../templates"
-import "./_index.scss";
+import "./index.scss";
 
 class ListPosts extends Component {
   constructor(props) {

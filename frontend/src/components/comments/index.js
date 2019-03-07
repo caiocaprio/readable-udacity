@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react'
+import { Link } from "react-router-dom"; 
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import VoteScoreComment from '../vote-score-comment'
-import { Link } from "react-router-dom";
+
+import FormComment from "../comments/form"
 
 export class Comments extends Component {
   static propTypes = {
@@ -11,16 +13,14 @@ export class Comments extends Component {
 
   render() {
       const {comments} = this.props
+      console.log(this.props)
     return (
       <Fragment>
         <div className="container-title">
             <h3>Comments</h3>
-            <div className="buttons ">
-            <Link className="button is-link is-pulled-left" to={`/comment/new`}>
-                New Comment
-            </Link>
-            </div>
+   
         </div>
+        
         {comments.map(comment => {
             const {
             author,
@@ -58,6 +58,7 @@ export class Comments extends Component {
             </article>
             );
         })}
+        <FormComment {...this.props}/>
       </Fragment>
     )
   }

@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import { addPost, updatePost, getPost } from "../../actions/posts";
 import { getCategories } from "../../actions/categories";
 import {Master} from "../templates"
+import "./index.scss";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'
+
 function mapStateToProps({ CategoriesReducer }) {
   return {
     ...CategoriesReducer
@@ -31,6 +35,7 @@ class CreatePost extends Component {
     };
     this.onClickCancel = this.onClickCancel.bind(this)
     this.onClickSubmit = this.onClickSubmit.bind(this);
+    this.submitPost = this.submitPost.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
@@ -92,9 +97,7 @@ class CreatePost extends Component {
     });
   }
 
-  async onClickSubmit(e) {
-    e.preventDefault();
-    console.log("click", this.props);
+  async submitPost(){
     if (this.validate()) {
       const { post } = this.state;
       
@@ -114,6 +117,26 @@ class CreatePost extends Component {
         this.props.history.push({pathname:`/${post.category}/${post.id}`})
       }
     }
+  }
+
+   onClickSubmit(e) {
+    e.preventDefault();
+    console.log("click", this.props);
+    confirmAlert({
+      title: [<b>{this.state.post.author}</b>,`, confirm to submit ?`],
+      message: [<b>{this.state.post.title}</b>],
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => this.submitPost()
+        },
+        {
+          label: 'No',
+          onClick: () => {return}
+        }
+      ]
+    })
+   
     console.log("click", this.state);
   }
 

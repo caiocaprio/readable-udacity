@@ -7,7 +7,7 @@ import VoteScorePost from "../vote-score-post";
 import Comments from "../comments";
 import {Master} from "../templates";
 import FormPost from "../posts/form"
-
+import "./index.scss";
 class PostDetail extends Component {
   constructor(props) {
     super(props);

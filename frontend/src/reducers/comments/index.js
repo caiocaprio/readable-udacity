@@ -41,7 +41,9 @@ export default (state = INITIAL_STATE, action) => {
     case ADD_COMMENT:
       return {
         ...state,
-        comments: action.payload
+        comments: [ ...state.comments, action.payload ]
+              
+        
       };
     case REMOVE_COMMENT:
       return {

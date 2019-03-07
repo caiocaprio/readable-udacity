@@ -2,6 +2,7 @@ import {
   GET_COMMENTS,
   GET_COMMENT,
   REMOVE_COMMENT,
+  ADD_COMMENT,
   UPDATE_VOTE_COMMENT
 } from "../../actions/comments/actionsTypes";
 
@@ -19,17 +20,22 @@ export const getCommentsInPost = idPost => async dispatch => {
   });
 };
 
-export const addCommentInPost = comment =>
-  fetch(`${api}/comments`, {
+export const addCommentInPost = comment => async dispatch => {
+  
+  const response = await fetch(`${api}/comments`, {
     method: "POST",
     headers: {
       ...headers,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ comment })
+    body: JSON.stringify({ ...comment })
   })
-    .then(res => res.json())
-    .then(data => data.comments);
+  const payload = await response.json();
+  dispatch({
+    type: ADD_COMMENT,
+    payload
+  });
+}
 
 export const getComment = id => async dispatch => {
   const response = await fetch(`${api}/comments/${id}`, { headers });
