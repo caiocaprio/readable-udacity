@@ -1,4 +1,10 @@
-import { GET_COMMENTS, GET_COMMENT, ADD_COMMENT, UPDATE_COMMENT } from '../../actions/comments/actionsTypes';
+import {
+	GET_COMMENTS,
+	GET_COMMENT,
+	ADD_COMMENT,
+	UPDATE_COMMENT,
+	REMOVE_COMMENT
+} from '../../actions/comments/actionsTypes';
 
 import { api, headers } from '../../contants';
 
@@ -47,8 +53,8 @@ export const deteleComment = (id) => async (dispatch) => {
 	const payload = await response.json();
 
 	dispatch({
-		type: UPDATE_COMMENT,
-		payload
+		type: REMOVE_COMMENT,
+		payload: id
 	});
 
 	return payload;

@@ -37,7 +37,7 @@ export default (state = INITIAL_STATE, action) => {
 		case REMOVE_COMMENT:
 			return {
 				...state,
-				comments: action.payload
+				comments: state.comments.filter((comment) => comment.id != action.payload)
 			};
 		case GET_COMMENT:
 			return {
