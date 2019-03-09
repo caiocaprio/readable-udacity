@@ -77,6 +77,11 @@ export default (state = INITIAL_STATE, action) => {
 				newPost = getNewPostUpdated(state.post, action.payload.option);
 			}
 
+			return {
+				...state,
+				post: newPost
+			};
+
 		case UPDATE_COUNT_COMMENT_POST:
 			return {
 				...state,
