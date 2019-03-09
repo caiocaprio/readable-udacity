@@ -2,13 +2,6 @@ import { ADD_POST, GET_POSTS, GET_POST, UPDATE_POST } from './actionsTypes';
 
 import { api, headers } from '../../contants';
 
-// Generate a unique token for storing your bookshelf data on the backend server.
-// let token = localStorage.token;
-// if (!token)
-//   token = localStorage.token = Math.random()
-//     .toString(36)
-//     .substr(-8);
-
 export const getAllPosts = () => async (dispatch) => {
 	const response = await fetch(`${api}/posts`, { headers });
 	const payload = await response.json();
@@ -91,15 +84,3 @@ export const updateVoteInPost = (id, option) => async (dispatch) => {
 		payload
 	});
 };
-
-// export const search = query =>
-//   fetch(`${api}/search`, {
-//     method: 'POST',
-//     headers: {
-//       ...headers,
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({ query })
-//   })
-//     .then(res => res.json())
-//     .then(data => data.books);
