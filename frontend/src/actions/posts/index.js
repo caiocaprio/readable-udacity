@@ -1,4 +1,4 @@
-import { ADD_POST, GET_POSTS, GET_POST, UPDATE_POST, POST_NOT_FOUND } from './actionsTypes';
+import { ADD_POST, GET_POSTS, GET_POST, UPDATE_POST, POST_NOT_FOUND, UPDATE_VOTE_IN_POST } from './actionsTypes';
 
 import { api, headers } from '../../contants';
 
@@ -87,7 +87,7 @@ export const updateVoteInPost = (id, option) => async (dispatch) => {
 	const payload = await response.json();
 
 	dispatch({
-		type: UPDATE_POST,
-		payload
+		type: UPDATE_VOTE_IN_POST,
+		payload: { id, option }
 	});
 };

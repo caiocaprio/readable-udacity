@@ -28,7 +28,7 @@ class PostDetail extends Component {
         timestamp:'',
         deleted:false
       },
-      comments: []
+      comments: null
     };
 
     this.onClickEdit = this.onClickEdit.bind(this)
@@ -57,10 +57,10 @@ class PostDetail extends Component {
   }
 
   async shouldComponentUpdate(nextProps, nextState){
-    console.log(`shouldComponentUpdate`,nextProps.post)
+
     if(nextProps.post.deleted){
       return this.gotoPageNotFound()       
-    }else if(nextProps.post.id != '' ){
+    }else if(nextProps.post.id != '' && nextProps.post.commentCount > 0 && nextProps.comments.length == 0){
       await this.props.getCommentsInPost(nextState.post.id);
     }
 

@@ -1,4 +1,11 @@
-import { ADD_POST, GET_POST, GET_POSTS, UPDATE_POST, POST_NOT_FOUND } from '../../actions/posts/actionsTypes';
+import {
+	ADD_POST,
+	GET_POST,
+	GET_POSTS,
+	UPDATE_POST,
+	POST_NOT_FOUND,
+	UPDATE_VOTE_IN_POST
+} from '../../actions/posts/actionsTypes';
 const POST_DEFAULT = {
 	id: '',
 	timestamp: Date.now(),
@@ -46,6 +53,32 @@ export default (state = INITIAL_STATE, action) => {
 					action.payload
 				),
 				post: action.payload.deleted ? POST_DEFAULT : action.payload
+			};
+		case UPDATE_VOTE_IN_POST:
+			let newPost = { ...state.post };
+
+			const getNewPostUpdated = (post, vote) => {
+				return {
+					...post,
+					voteScore: vote == 'upVote' ? ++post.voteScore : --post.voteScore
+				};
+			};
+
+			if (state.posts.length > 0) {
+				state.posts.map((post) => {
+					if (post.id == action.payload.id) {
+						newPost = getNewPostUpdated(post, action.payload.option);
+						return newPost;
+					}
+					return post;
+				});
+			} else {
+				newPost = getNewPostUpdated(state.post, action.payload.option);
+			}
+
+			return {
+				...state,
+				post: newPost
 			};
 
 		default:
