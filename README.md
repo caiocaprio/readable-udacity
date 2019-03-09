@@ -6,7 +6,7 @@ This project is intended to show what we have learned in the Redux module, conta
 
 This project using ReactJS, React-Router Module, Redux, Bulma CSS framework and other packages
 
-![Readable](/.picturesForReadme/myreads.png)
+![Readable](/.picturesForReadme/readable.png)
 
 To run the project you need:
 
