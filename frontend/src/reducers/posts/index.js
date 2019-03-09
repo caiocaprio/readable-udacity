@@ -4,7 +4,8 @@ import {
 	GET_POSTS,
 	UPDATE_POST,
 	POST_NOT_FOUND,
-	UPDATE_VOTE_IN_POST
+	UPDATE_VOTE_IN_POST,
+	UPDATE_COUNT_COMMENT_POST
 } from '../../actions/posts/actionsTypes';
 const POST_DEFAULT = {
 	id: '',
@@ -75,6 +76,15 @@ export default (state = INITIAL_STATE, action) => {
 			} else {
 				newPost = getNewPostUpdated(state.post, action.payload.option);
 			}
+
+		case UPDATE_COUNT_COMMENT_POST:
+			return {
+				...state,
+				post: {
+					...state.post,
+					commentCount: state.post.commentCount + action.payload
+				}
+			};
 
 			return {
 				...state,

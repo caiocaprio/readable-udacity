@@ -5,6 +5,7 @@ import {
 	UPDATE_COMMENT,
 	REMOVE_COMMENT
 } from '../../actions/comments/actionsTypes';
+import { UPDATE_COUNT_COMMENT_POST } from '../../actions/posts/actionsTypes';
 
 import { api, headers } from '../../contants';
 
@@ -31,9 +32,15 @@ export const addCommentInPost = (comment) => async (dispatch) => {
 		body: JSON.stringify({ ...comment })
 	});
 	const payload = await response.json();
+
 	dispatch({
 		type: ADD_COMMENT,
 		payload
+	});
+
+	dispatch({
+		type: UPDATE_COUNT_COMMENT_POST,
+		payload: +1
 	});
 };
 
@@ -55,6 +62,11 @@ export const deteleComment = (id) => async (dispatch) => {
 	dispatch({
 		type: REMOVE_COMMENT,
 		payload: id
+	});
+
+	dispatch({
+		type: UPDATE_COUNT_COMMENT_POST,
+		payload: -1
 	});
 
 	return payload;
