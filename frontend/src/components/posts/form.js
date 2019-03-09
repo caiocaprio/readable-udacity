@@ -24,12 +24,13 @@ class CreatePost extends Component {
 				timestamp: 0,
 				title: '',
 				body: '',
-				author: 'Pelé',
+				author: '',
 				category: ''
 			},
 			category: false,
 			title: false,
-			body: false
+			body: false,
+			author: false
 		};
 		this.onClickCancel = this.onClickCancel.bind(this);
 		this.onClickSubmit = this.onClickSubmit.bind(this);
@@ -87,9 +88,9 @@ class CreatePost extends Component {
 	}
 
 	validate() {
-		const { category, title, body } = this.state;
+		const { category, title, body, author } = this.state;
 
-		return title && category && body;
+		return title && category && body && author;
 	}
 
 	onChange(e) {
@@ -137,7 +138,7 @@ class CreatePost extends Component {
 	}
 
 	getForm() {
-		const { post: { title, body, category, id } } = this.state;
+		const { post: { title, body, category, id, author } } = this.state;
 		const { categories } = this.props;
 
 		return (
@@ -155,6 +156,20 @@ class CreatePost extends Component {
 								})()}
 							</select>
 						</div>
+					</div>
+				</div>
+				<div className="field">
+					<label className="label">Author</label>
+					<div className="control">
+						<input
+							className="input"
+							name="author"
+							type="text"
+							placeholder=""
+							disabled={id !== ''}
+							onChange={this.onChange}
+							value={author}
+						/>
 					</div>
 				</div>
 				<div className="field">

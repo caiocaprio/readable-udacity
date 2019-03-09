@@ -9,6 +9,7 @@ import ListPosts from '../posts/list';
 import DetailPost from '../posts/detail';
 import FormPost from '../posts/form';
 import FormComment from '../comments/form';
+import Error from '../error';
 
 import { setLoader } from '../../actions/global';
 import './index.css';
@@ -39,6 +40,11 @@ class App extends Component {
 											/>
 											<Route
 												exact
+												path="/error/:error_code"
+												render={(props) => <Error {...props} {...this.props} />}
+											/>
+											<Route
+												exact
 												path="/:category?"
 												render={(props) => <ListPosts {...props} {...this.props} />}
 											/>
@@ -47,6 +53,7 @@ class App extends Component {
 												path="/:category/:post_id"
 												render={(props) => <DetailPost {...props} {...this.props} />}
 											/>
+
 											<Route
 												exact
 												path="/"

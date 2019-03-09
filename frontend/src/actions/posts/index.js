@@ -1,4 +1,4 @@
-import { ADD_POST, GET_POSTS, GET_POST, UPDATE_POST } from './actionsTypes';
+import { ADD_POST, GET_POSTS, GET_POST, UPDATE_POST, POST_NOT_FOUND } from './actionsTypes';
 
 import { api, headers } from '../../contants';
 
@@ -33,6 +33,13 @@ export const addPost = (post) => async (dispatch) => {
 export const getPost = (id) => async (dispatch) => {
 	const response = await fetch(`${api}/posts/${id}`, { headers });
 	const payload = await response.json();
+
+	if (!payload.id || payload.deleted)
+		return dispatch({
+			type: POST_NOT_FOUND,
+			payload
+		});
+
 	dispatch({
 		type: GET_POST,
 		payload

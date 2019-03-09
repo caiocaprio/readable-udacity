@@ -17,7 +17,17 @@ class PostDetail extends Component {
     this.state = {
       order: null,
       edit:false,
-      post: {},
+      post: {
+        category:'',
+        id:'',
+        title:'',
+        voteScore:'',
+        commentCount:'',
+        body:'',
+        author:'',
+        timestamp:'',
+        deleted:false
+      },
       comments: []
     };
 
@@ -25,6 +35,7 @@ class PostDetail extends Component {
     this.setEdit = this.setEdit.bind(this)
     this.deletePost = this.deletePost.bind(this)
     this.onConfirmDelete = this.onConfirmDelete.bind(this)
+    this.gotoPageNotFound = this.gotoPageNotFound.bind(this)
   }
 
   async componentDidMount() {
@@ -35,7 +46,29 @@ class PostDetail extends Component {
     } = this.props;
 
     await this.props.getPost(post_id);
-    await this.props.getCommentsInPost(post_id);
+   
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState){
+    if(nextProps.post && nextProps.post.id != prevState.post.id){
+      return {post:nextProps.post}
+    }
+    return null
+  }
+
+  async shouldComponentUpdate(nextProps, nextState){
+    console.log(`shouldComponentUpdate`,nextProps.post)
+    if(nextProps.post.deleted){
+      return this.gotoPageNotFound()       
+    }else if(nextProps.post.id != '' ){
+      await this.props.getCommentsInPost(nextState.post.id);
+    }
+
+    return true
+  }
+
+  gotoPageNotFound(){
+    this.props.history.push({pathname:'/error/404'})
   }
 
   setEdit(edit){
@@ -89,7 +122,7 @@ class PostDetail extends Component {
       comments
     } = this.props;
 
- 
+    
 
     const {edit} = this.state
 

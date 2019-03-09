@@ -1,4 +1,4 @@
-import { ADD_POST, GET_POST, GET_POSTS, UPDATE_POST } from '../../actions/posts/actionsTypes';
+import { ADD_POST, GET_POST, GET_POSTS, UPDATE_POST, POST_NOT_FOUND } from '../../actions/posts/actionsTypes';
 const POST_DEFAULT = {
 	id: '',
 	timestamp: Date.now(),
@@ -30,6 +30,14 @@ export default (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				post: action.payload
+			};
+		case POST_NOT_FOUND:
+			return {
+				...state,
+				post: {
+					...POST_DEFAULT,
+					deleted: true
+				}
 			};
 		case UPDATE_POST:
 			return {
