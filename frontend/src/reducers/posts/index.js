@@ -29,10 +29,10 @@ export default (state = INITIAL_STATE, action) => {
 				posts: action.payload
 			};
 		case ADD_POST:
-			return {
-				...state,
+			return Object.assign({}, state, {
 				posts: [ ...state.posts, action.payload ]
-			};
+			});
+
 		case GET_POST:
 			return {
 				...state,

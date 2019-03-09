@@ -15,7 +15,7 @@ export const getPostsInCategory = (category) =>
 	fetch(`${api}/${category}/posts`, { headers }).then((res) => res.json()).then((data) => data.posts);
 
 export const addPost = (post) => async (dispatch) => {
-	const response = await fetch(`${api}/posts`, {
+	await fetch(`${api}/posts`, {
 		method: 'POST',
 		headers: {
 			...headers,
@@ -23,10 +23,10 @@ export const addPost = (post) => async (dispatch) => {
 		},
 		body: JSON.stringify({ ...post })
 	});
-	const payload = await response.json();
+
 	dispatch({
 		type: ADD_POST,
-		payload
+		payload: post
 	});
 };
 
@@ -75,7 +75,7 @@ export const deletePost = (id) => async (dispatch) => {
 };
 
 export const updateVoteInPost = (id, option) => async (dispatch) => {
-	const response = await fetch(`${api}/posts/${id}`, {
+	await fetch(`${api}/posts/${id}`, {
 		method: 'POST',
 		headers: {
 			...headers,
@@ -83,8 +83,6 @@ export const updateVoteInPost = (id, option) => async (dispatch) => {
 		},
 		body: JSON.stringify({ option })
 	});
-
-	const payload = await response.json();
 
 	dispatch({
 		type: UPDATE_VOTE_IN_POST,
