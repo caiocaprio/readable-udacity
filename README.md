@@ -8,7 +8,21 @@ This project using ReactJS, React-Router Module, Redux, Bulma CSS framework and 
 
 ![Readable](/.picturesForReadme/readable.png)
 
-To run the project you need:
+To run the project you need enter the server folder and run the commands:
+
+## install modules
+
+```sh
+npm i
+```
+
+## Start Server
+
+```sh
+node server
+```
+
+After the server is running, go into the front-end folder and run the commands
 
 ## install modules
 
