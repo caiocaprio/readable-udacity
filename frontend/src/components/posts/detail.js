@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { getPost, updateVoteInPost } from "../../actions/posts";
+import { getPost, updateVoteInPost, deletePost } from "../../actions/posts";
 import { getCommentsInPost, updateVoteInComment } from "../../actions/comments";
 import { Link } from "react-router-dom";
 import VoteScorePost from "../vote-score-post";
@@ -8,6 +8,8 @@ import Comments from "../comments";
 import {Master} from "../templates";
 import FormPost from "../posts/form"
 import "./index.scss";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 class PostDetail extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +23,8 @@ class PostDetail extends Component {
 
     this.onClickEdit = this.onClickEdit.bind(this)
     this.setEdit = this.setEdit.bind(this)
+    this.deletePost = this.deletePost.bind(this)
+    this.onConfirmDelete = this.onConfirmDelete.bind(this)
   }
 
   async componentDidMount() {
@@ -43,6 +47,32 @@ class PostDetail extends Component {
     this.setState({edit:true})
   }
 
+  onConfirmDelete(id, body) {
+		confirmAlert({
+			title: [ <b>Do you really want to delete?</b> ],
+			message: body,
+			buttons: [
+				{
+					label: 'Yes',
+					onClick: async () => await this.deletePost(id)
+				},
+				{
+					label: 'No',
+					onClick: () => {
+						return;
+					}
+				}
+			]
+		});
+	}
+
+	async deletePost(id) {
+    await this.props.deletePost(id);
+    
+    this.props.history.push({pathname:"/"})
+	}
+
+
   render() {
     const {
       post,
@@ -58,7 +88,8 @@ class PostDetail extends Component {
       },
       comments
     } = this.props;
-    console.log('this.state',this.state)
+
+ 
 
     const {edit} = this.state
 
@@ -75,16 +106,25 @@ class PostDetail extends Component {
             <h1 className="title is-pulled-left">Post</h1>           
               <div className="buttons ">
                 <Link className="button is-link is-pulled-left" to={`/`}>
+                <span class="icon">
+                  <i class="fas fa-arrow-left"></i>
+                </span>
                   back
                 </Link>
-                <Link className="button is-link is-pulled-left" to={`/post/edit/${id}`}>
-                  edit
-                </Link>              
+                      
               </div>
             </div>
             <div key={id} className="card article">
               <div className="card-content">
                 <div className="content ">
+                  <div className="buttons-top is-pulled-right">
+                    <Link className="button is-white icon" to={`/post/edit/${id}`}>
+                      <i class="fas fa-edit"></i>                  
+                    </Link>  
+                    <button className="button is-white icon" 	onClick={() => this.onConfirmDelete(id, body)}>
+                      <i class="fas fa-trash-alt"></i>                 
+                    </button>    
+                  </div>    
                   <div className="article-header">
                     <h2 className="title article-title">
                       {title}
@@ -156,5 +196,5 @@ const mapStateToProps = ({ CommentsReducer, PostsReducer }) => ({
 
 export default connect(
   mapStateToProps,
-  { getPost, getCommentsInPost, updateVoteInPost, updateVoteInComment }
+  { getPost, getCommentsInPost, updateVoteInPost, updateVoteInComment, deletePost }
 )(PostDetail);

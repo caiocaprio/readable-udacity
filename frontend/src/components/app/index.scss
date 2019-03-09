@@ -1,5 +1,6 @@
 @import "bulma/bulma";
-// @import 'bulma-extensions/src/sass';
+
+
 html,
 body {
   font-family: "Open Sans", sans-serif;
@@ -86,4 +87,13 @@ body {
   >.buttons > .order {
     margin: 0 15px 0 0;
   }
+}
+
+.button {
+  .icon {
+    &:first-child:last-child {
+      margin-right: 0;
+    }
+  
+  } 
 }
