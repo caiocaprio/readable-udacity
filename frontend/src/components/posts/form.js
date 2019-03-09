@@ -7,6 +7,7 @@ import { Master } from '../templates';
 import './index.scss';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import PropTypes from 'prop-types';
 
 function mapStateToProps({ CategoriesReducer }) {
 	return {
@@ -240,5 +241,20 @@ class CreatePost extends Component {
 		);
 	}
 }
+
+CreatePost.propTypes = {
+	post: PropTypes.shape({
+		id: PropTypes.string,
+		timestamp: PropTypes.number,
+		title: PropTypes.string,
+		body: PropTypes.string,
+		author: PropTypes.string,
+		category: PropTypes.string
+	}),
+	category: PropTypes.array,
+	title: PropTypes.array,
+	body: PropTypes.array,
+	author: PropTypes.array
+};
 
 export default connect(mapStateToProps, { addPost, updatePost, getCategories, getPost })(CreatePost);

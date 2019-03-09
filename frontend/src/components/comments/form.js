@@ -2,11 +2,11 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addCommentInPost, updateComment, getComment } from '../../actions/comments';
-import { Link } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import { Master } from '../templates';
 import { getPost } from '../../actions/posts';
-export class formComment extends Component {
+
+export class FormComment extends Component {
 	constructor(props) {
 		super(props);
 
@@ -205,6 +205,18 @@ export class formComment extends Component {
 	}
 }
 
+FormComment.propTypes = {
+	comment: PropTypes.shape({
+		id: PropTypes.string,
+		timestamp: PropTypes.number,
+		author: PropTypes.string,
+		body: PropTypes.string,
+		parentId: PropTypes.string
+	}),
+	author: PropTypes.bool,
+	body: PropTypes.bool
+};
+
 const mapStateToProps = ({ CommentsReducer, PostsReducer }) => ({ ...CommentsReducer, PostsReducer });
 
 const mapDispatchToProps = {
@@ -214,4 +226,4 @@ const mapDispatchToProps = {
 	getPost
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(formComment);
+export default connect(mapStateToProps, mapDispatchToProps)(FormComment);

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPost, updateVoteInPost, deletePost } from "../../actions/posts";
 import { getCommentsInPost, updateVoteInComment } from "../../actions/comments";
@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import VoteScorePost from "../vote-score-post";
 import Comments from "../comments";
 import {Master} from "../templates";
-import FormPost from "../posts/form"
 import "./index.scss";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import PropTypes from 'prop-types';
 class PostDetail extends Component {
   constructor(props) {
     super(props);
@@ -226,6 +226,24 @@ const mapStateToProps = ({ CommentsReducer, PostsReducer }) => ({
   ...CommentsReducer,
   ...PostsReducer
 });
+
+PostDetail.propTypes = {
+  order: PropTypes.string,
+  edit:PropTypes.bool,
+  post: PropTypes.shape({
+    category:PropTypes.string,
+    id:PropTypes.string,
+    title:PropTypes.string,
+    voteScore:PropTypes.string,
+    commentCount:PropTypes.string,
+    body:PropTypes.string,
+    author:PropTypes.string,
+    timestamp:PropTypes.string,
+    deleted:PropTypes.bool
+  }),
+  comments: PropTypes.array
+};
+
 
 export default connect(
   mapStateToProps,

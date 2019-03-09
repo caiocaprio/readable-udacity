@@ -1,65 +1,58 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 class VoteScorePost extends Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      vote: null,
-      like: 0,
-      id: null,
-      notlike: 0,
-      mouseEnterNotLike: "",
-      mouseEnterLike: ""
-    };
+		this.state = {
+			id: null
+		};
 
-    this.onClick = this.onClick.bind(this);
-  }
+		this.onClick = this.onClick.bind(this);
+	}
 
-  static getDerivedStateFromProps(props, state) {
-    const { id } = props;
-    return {
-      id: id ? id : state.id
-    };
-  }
+	static getDerivedStateFromProps(props, state) {
+		const { id } = props;
+		return {
+			id: id ? id : state.id
+		};
+	}
 
-  resetFocus() {
-    document.getElementById("root").focus();
-  }
+	resetFocus() {
+		document.getElementById('root').focus();
+	}
 
-  onClick(e) {
-    const { updateVoteInPost } = this.props;
+	onClick(e) {
+		const { updateVoteInPost } = this.props;
 
-    if (e.target.className.indexOf("bt-notlike") != -1) {
-      updateVoteInPost(this.state.id, "downVote");
-    } else {
-      updateVoteInPost(this.state.id, "upVote");
-    }
-    this.resetFocus();
-  }
+		if (e.target.className.indexOf('bt-notlike') != -1) {
+			updateVoteInPost(this.state.id, 'downVote');
+		} else {
+			updateVoteInPost(this.state.id, 'upVote');
+		}
+		this.resetFocus();
+	}
 
-  render() {
-    return (
-      <div ref={this.sectionFocusEl}>
-        <button
-          className={`button bt-like is-success is-outlined`}
-          onClick={this.onClick}
-        >
-          <i className="far fa-thumbs-up" />
-          &nbsp;Like
-        </button>
-        &nbsp;
-        <button
-          className={`button bt-notlike is-danger is-outlined`}
-          onClick={this.onClick}
-        >
-          <i className="far fa-thumbs-down" />
-          &nbsp;Not like
-        </button>
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div ref={this.sectionFocusEl}>
+				<button className={`button bt-like is-success is-outlined`} onClick={this.onClick}>
+					<i className="far fa-thumbs-up" />
+					&nbsp;Like
+				</button>
+				&nbsp;
+				<button className={`button bt-notlike is-danger is-outlined`} onClick={this.onClick}>
+					<i className="far fa-thumbs-down" />
+					&nbsp;Not like
+				</button>
+			</div>
+		);
+	}
 }
+
+VoteScorePost.propTypes = {
+	id: PropTypes.number
+};
 
 export default VoteScorePost;

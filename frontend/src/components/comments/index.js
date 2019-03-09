@@ -11,7 +11,6 @@ import { deteleComment } from '../../actions/comments';
 export class Comments extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
 		this.onConfirmDelete = this.onConfirmDelete.bind(this);
 		this.deleteComment = this.deleteComment.bind(this);
 	}

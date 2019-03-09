@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getAllPosts, updateVoteInPost } from '../../actions/posts';
 import { getCategories } from '../../actions/categories';
+import PropTypes from 'prop-types';
 import VoteScorePost from '../vote-score-post';
 import Categories from '../categories';
 import { Master } from '../templates';
@@ -183,6 +184,10 @@ class ListPosts extends Component {
 		);
 	}
 }
+
+ListPosts.propTypes = {
+	order: PropTypes.string
+};
 
 const mapStateToProps = ({ CommentsReducer, PostsReducer, CategoriesReducer }) => ({
 	...CommentsReducer,

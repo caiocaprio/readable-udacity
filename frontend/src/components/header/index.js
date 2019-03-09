@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 class Header extends Component {
 	constructor(props) {
 		super(props);
@@ -50,5 +51,11 @@ class Header extends Component {
 		);
 	}
 }
+
+Header.propTypes = {
+	menu: PropTypes.shape({
+		active: PropTypes.bool
+	})
+};
 
 export default Header;
