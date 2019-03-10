@@ -27,7 +27,7 @@ class CreatePost extends Component {
 				body: '',
 				author: '',
 				category: '',
-				voteScore: 0,
+				voteScore: 1,
 				commentCount: 0
 			},
 			category: false,
