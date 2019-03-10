@@ -26,7 +26,8 @@ class CreatePost extends Component {
 				title: '',
 				body: '',
 				author: '',
-				category: ''
+				category: '',
+				voteScore: 0
 			},
 			category: false,
 			title: false,
@@ -246,6 +247,7 @@ CreatePost.propTypes = {
 	post: PropTypes.shape({
 		id: PropTypes.string,
 		timestamp: PropTypes.number,
+		voteScore: PropTypes.number,
 		title: PropTypes.string,
 		body: PropTypes.string,
 		author: PropTypes.string,
