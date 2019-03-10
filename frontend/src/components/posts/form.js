@@ -74,7 +74,8 @@ class CreatePost extends Component {
 				post: nextProps.post,
 				category: nextProps.post.category != '' ? true : false,
 				title: nextProps.post.title != '' ? true : false,
-				body: nextProps.post.body != '' ? true : false
+				body: nextProps.post.body != '' ? true : false,
+				author: nextProps.post.author != '' ? true : false
 			};
 		}
 		return null;
@@ -105,6 +106,7 @@ class CreatePost extends Component {
 
 	async submitPost() {
 		if (this.validate()) {
+			console.log(`submit`);
 			const { post } = this.state;
 
 			if (post.id == '') {
