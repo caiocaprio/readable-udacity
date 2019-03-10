@@ -27,7 +27,8 @@ class CreatePost extends Component {
 				body: '',
 				author: '',
 				category: '',
-				voteScore: 0
+				voteScore: 0,
+				commentCount: 0
 			},
 			category: false,
 			title: false,
@@ -248,6 +249,7 @@ CreatePost.propTypes = {
 		id: PropTypes.string,
 		timestamp: PropTypes.number,
 		voteScore: PropTypes.number,
+		commentCount: PropTypes.number,
 		title: PropTypes.string,
 		body: PropTypes.string,
 		author: PropTypes.string,
